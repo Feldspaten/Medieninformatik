@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class GameController : MonoBehaviour
     public Text enemyText;
     public Text infoText;
 
+    private int conesActive = 0;
+    private int maxCones = 1;
 
     private int initialEnemyCount;
 
@@ -28,6 +31,12 @@ public class GameController : MonoBehaviour
         healthText.text = "Health " + player.Health;
         ammoText.text = "Ammo: " + player.Ammo;
 
+        if (conesActive < maxCones)
+        {
+            SelectCone();
+            conesActive++;
+        }
+
         int aliveEnemies = 0;
         foreach(Enemy enemy in enemyContainer.GetComponentsInChildren<Enemy>())
         {
@@ -41,7 +50,7 @@ public class GameController : MonoBehaviour
         if(aliveEnemies == 0)
         {
             infoText.gameObject.SetActive(true);
-            infoText.text = "You win!\nGood Job!";
+            //infoText.text = "You win!\nGood Job!";
         }
 
         if(player.Killed == true)
@@ -49,5 +58,12 @@ public class GameController : MonoBehaviour
             infoText.gameObject.SetActive(true);
             infoText.text = "You lose :(\nTry again!";
         }
+    }
+
+    public void SelectCone()
+    {
+        var cones = ObjectPoolingManager.Instance.Cones;
+        int randomCone = Random.Range(1, cones.Count);
+        cones.ElementAt(randomCone).gameObject.GetComponent<ConeEnemy>().SetActiveArrow();
     }
 }

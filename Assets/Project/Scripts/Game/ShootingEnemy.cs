@@ -35,8 +35,10 @@ public class ShootingEnemy : Enemy
         {
             shootingTimer = shootingInterval;
 
-            GameObject bulletObject = ObjectPoolingManager.Instance.GetBullet(false);
-            bulletObject.transform.position = transform.position;
+            GameObject bulletObject = ObjectPoolingManager.Instance.GetBullet(false, "vanille");
+                    
+                        bulletObject.transform.position = transform.position;
+
             bulletObject.transform.forward = (player.transform.position - transform.position).normalized;
 
 
