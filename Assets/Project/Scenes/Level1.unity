@@ -2510,7 +2510,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Good Job
+  m_Text: 
 --- !u!222 &270907479
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3424,30 +3424,31 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 417349758}
-  - component: {fileID: 417349761}
-  - component: {fileID: 417349760}
-  - component: {fileID: 417349759}
-  m_Layer: 0
-  m_Name: BallTop
+  - component: {fileID: 325455695}
+  m_Layer: 1
+  m_Name: SpawnPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &417349758
+--- !u!4 &325455695
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417349757}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0, z: -0.016921429}
-  m_LocalScale: {x: 0.017, y: 0.012142861, z: 0.017000003}
-  m_Children: []
-  m_Father: {fileID: 507855084}
-  m_RootOrder: 1
+  m_GameObject: {fileID: 325455694}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1338816217}
+  - {fileID: 233389318}
+  - {fileID: 1258880885}
+  - {fileID: 1853447888}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &417349759
 SphereCollider:
@@ -8064,9 +8065,8 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &919859285
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2467830213282230763, guid: 0c2e995ff7ce53643a35a3ab4fb8b407, type: 3}
+  m_PrefabInstance: {fileID: 2467830212440228286}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919859284}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -15386,28 +15386,27 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1719437125}
-  m_Layer: 0
-  m_Name: Container
+  - component: {fileID: 1853447888}
+  m_Layer: 1
+  m_Name: Spawn4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1719437125
+--- !u!4 &1853447888
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1719437124}
+  m_GameObject: {fileID: 1853447887}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 13.42, y: 0, z: -9.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 507855084}
-  m_Father: {fileID: 919859285}
-  m_RootOrder: 0
+  m_Children: []
+  m_Father: {fileID: 325455695}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1726800334
 PrefabInstance:
@@ -18225,7 +18224,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 8786779760856587297, guid: c0c131f0363202b4d91a6446e25191d4, type: 3}
+  conePrefab: {fileID: 2467830213282230762, guid: 0c2e995ff7ce53643a35a3ab4fb8b407, type: 3}
   bulletAmount: 8
+  coneAmount: 3
+  spawnPoints:
+  - {fileID: 1338816216}
+  - {fileID: 233389317}
+  - {fileID: 1258880884}
+  - {fileID: 1853447887}
 --- !u!4 &2077658073
 Transform:
   m_ObjectHideFlags: 0
@@ -18798,6 +18804,10 @@ PrefabInstance:
     - target: {fileID: 5447485273718886245, guid: ffb3c879274be8f4b8e7114a532928f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5447485274839694549, guid: ffb3c879274be8f4b8e7114a532928f9, type: 3}
+      propertyPath: initialAmmo
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 5447485274839694549, guid: ffb3c879274be8f4b8e7114a532928f9, type: 3}
       propertyPath: vanilleMaterial
