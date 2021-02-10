@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
                 schokoladeCount--;
                 GameObject bulletObject = ObjectPoolingManager.Instance.GetBullet(true, "schokolade");
                 bulletObject.GetComponent<MeshRenderer>().material = schokoladeMaterial;
-                bulletObject.transform.position = playerCamera.transform.position + playerCamera.transform.forward;
+                bulletObject.transform.position = ShootPoint.transform.position + playerCamera.transform.forward;
                 bulletObject.transform.forward = playerCamera.transform.forward;
             }
         }
