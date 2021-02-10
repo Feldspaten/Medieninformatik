@@ -103,7 +103,7 @@ public class GameController : MonoBehaviour
                     audioSource.PlayOneShot(gameWonAudioClip);
                 }
             }
-            enemyText.text = "Fertige Eishörnchen:\n" + Points;
+            enemyText.text = "Punkte:\n" + Points;
 
             if (conesActive < maxCones)
             {
