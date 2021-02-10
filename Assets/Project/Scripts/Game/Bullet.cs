@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
 {
     public float speed = 8f;
     public float lifeDuration = 2f;
-    public int damage = 5;
+    public int damage = 1;
     private string currentFarbe;
     public string CurrentFarbe => currentFarbe;
     public GameObject bulletGameObject;

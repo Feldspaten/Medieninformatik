@@ -11,15 +11,36 @@ public class ObjectPoolingManager : MonoBehaviour
     public static ObjectPoolingManager Instance { get { return instance; } }
     public GameObject bulletPrefab;
     public GameObject conePrefab;
+    public GameObject barrelVanillePrefab;
+    public GameObject barrelSchokoladePrefab;
     public int bulletAmount = 20;
     public int coneAmount = 10;
 
     private List<GameObject> bullets;
-
+    
     private List<GameObject> cones;
     public List<GameObject> Cones => cones;
 
+    public bool vanilleBarrelActive = false;
+    public bool schokoladeBarrelActive = false;
+
+    public List<GameObject> spawnPointsVanille;
+    public List<GameObject> spawnPointsSchokolade;
+
     public List<GameObject> spawnPoints;
+
+    void Update()
+    {
+        if (!vanilleBarrelActive)
+        {
+            SpawnBarrelVanille();
+        }
+
+        if (!schokoladeBarrelActive)
+        {
+            SpawnSchokoladeBarrel();
+        }
+    }
    
     void Awake()
     {
@@ -91,10 +112,31 @@ public class ObjectPoolingManager : MonoBehaviour
     {
         foreach (var cone in cones)
         {
-            int spawn = Random.Range(0, coneAmount - 1);
+            int spawn = Random.Range(0, spawnPoints.Count);
             var obj = cone.gameObject.GetComponent<ConeEnemy>();
             obj.SetPosition(spawnPoints.ElementAt(spawn).transform.position);
             cone.SetActive(true);
         }
+    }
+
+    public void SpawnCone()
+    {
+
+    }
+
+    public void SpawnBarrelVanille()
+    {
+        vanilleBarrelActive = true;
+        GameObject prefabInstace = Instantiate(barrelVanillePrefab);
+        var place = Random.Range(0, 4);
+        prefabInstace.transform.position = spawnPointsVanille.ElementAt(place).transform.position;
+    }
+
+    public void SpawnSchokoladeBarrel()
+    {
+        schokoladeBarrelActive = true;
+        GameObject prefabInstace = Instantiate(barrelSchokoladePrefab);
+        var place = Random.Range(0, 4);
+        prefabInstace.transform.position = spawnPointsSchokolade.ElementAt(place).transform.position;
     }
 }

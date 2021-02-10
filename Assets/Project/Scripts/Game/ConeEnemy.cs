@@ -21,10 +21,16 @@ public class ConeEnemy : MonoBehaviour
     public float arrowRotationSpeed = 20f;
     private int timesHit = 0;
     private bool isSelected = false;
+    public bool wasSelected = false;
     private Player player;
     private int falseHits = 0;
     private NavMeshAgent agent;
     private float walkTime = 2f;
+    private string[] sorten;
+    private bool killed = false;
+    private AudioSource audioSource;
+
+    public AudioClip filledAudioClip;
     void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
@@ -32,21 +38,29 @@ public class ConeEnemy : MonoBehaviour
         ScoopTop.SetActive(false);
         ScoopBottom.SetActive(false);
         agent.SetDestination(RandomNavmeshLocation(4f));
+        audioSource = GameObject.Find("Player").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (walkTime < 0)
+        if (killed)
         {
-            agent.SetDestination(RandomNavmeshLocation(4f));
-            walkTime = 1f;
+            transform.Translate(Vector3.up * 3 * Time.deltaTime, Space.World);
         }
         else
         {
-            walkTime -= Time.deltaTime;
+            if (walkTime < 0)
+            {
+                agent.SetDestination(RandomNavmeshLocation(4f));
+                walkTime = 1f;
+            }
+            else
+            {
+                walkTime -= Time.deltaTime;
+            }
+            arrowContainer.transform.Rotate(Vector3.up * arrowRotationSpeed * Time.deltaTime);
         }
-        arrowContainer.transform.Rotate(Vector3.up * arrowRotationSpeed * Time.deltaTime);
     }
 
     void OnTriggerEnter(Collider otherCollider)
@@ -59,19 +73,43 @@ public class ConeEnemy : MonoBehaviour
                 bullet.gameObject.SetActive(false);
                 if (isSelected)
                 {
-
-                    Debug.Log(bullet.CurrentFarbe);
-                    timesHit++;
-
-                    switch (timesHit)
+                    
+                    if (bullet.CurrentFarbe == sorten[timesHit])
                     {
-                        case 1:
-                            SetFarbeActive(ScoopBottom, bullet.CurrentFarbe);
-                            break;
-                        case 2:
-                            SetFarbeActive(ScoopTop, bullet.CurrentFarbe);
-                            break;
+                        timesHit++;
+                        switch (timesHit)
+                        {
+                            case 1:
+                                SetFarbeActive(ScoopBottom, bullet.CurrentFarbe);
+                                break;
+                            case 2:
+                                SetFarbeActive(ScoopTop, bullet.CurrentFarbe);
+                                OnKill();
+                                break;
+                        }
                     }
+                    else
+                    {
+                        timesHit = 0;
+                        ScoopBottom.SetActive(false);
+                        ScoopTop.SetActive(false);
+                        GameObject bulletLeft = ObjectPoolingManager.Instance.GetBullet(false, bullet.CurrentFarbe);
+                        GameObject bulletCenter = ObjectPoolingManager.Instance.GetBullet(false, bullet.CurrentFarbe);
+                        GameObject bulletRight = ObjectPoolingManager.Instance.GetBullet(false, bullet.CurrentFarbe);
+                        bulletLeft.transform.position = transform.position + new Vector3(0.25f, 1.7f, 0.6f);
+                        bulletLeft.transform.forward = (player.transform.position - transform.position).normalized;
+                        bulletLeft.transform.RotateAround(bulletLeft.transform.position, Vector3.up, -20f);
+
+                        bulletCenter.transform.position = transform.position + new Vector3(0.25f, 1.7f, 0.6f);
+                        bulletCenter.transform.forward = (player.transform.position - transform.position).normalized;
+
+                        bulletRight.transform.position = transform.position + new Vector3(0.25f, 1.7f, 0.6f);
+                        bulletRight.transform.forward = (player.transform.position - transform.position).normalized;
+                        bulletRight.transform.RotateAround(bulletLeft.transform.position, Vector3.up, 20f);
+                    }
+                    
+
+
                 }
                 else
                 {
@@ -125,10 +163,12 @@ public class ConeEnemy : MonoBehaviour
         transform.position = position;
     }
 
-    public void SetActiveArrow()
+    public void SetActive(string[] s)
     {
+        sorten = s;
         arrowGameObject.SetActive(true);
         isSelected = true;
+        wasSelected = true;
     }
 
     public Vector3 RandomNavmeshLocation(float radius)
@@ -142,6 +182,18 @@ public class ConeEnemy : MonoBehaviour
             finalPosition = hit.position;
         }
         return finalPosition;
+    }
+
+    protected void OnKill()
+    {
+        isSelected = false;
+        killed = true;
+        audioSource.PlayOneShot(filledAudioClip);
+        GameController.Instance.Points++;
+        GameController.Instance.SelectCone();
+        agent.enabled = false;
+        //this.enabled = false;
+        this.arrowContainer.SetActive(false);
     }
 }
 

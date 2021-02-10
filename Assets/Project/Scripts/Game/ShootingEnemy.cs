@@ -18,7 +18,6 @@ public class ShootingEnemy : Enemy
         player = GameObject.Find("Player").GetComponent<Player>();
         agent = GetComponent<NavMeshAgent>();
         shootingTimer = Random.Range(0, shootingInterval);
-
         agent.SetDestination(player.transform.position);
     }
 
@@ -36,9 +35,7 @@ public class ShootingEnemy : Enemy
             shootingTimer = shootingInterval;
 
             GameObject bulletObject = ObjectPoolingManager.Instance.GetBullet(false, "vanille");
-                    
-                        bulletObject.transform.position = transform.position;
-
+            bulletObject.transform.position = transform.position;
             bulletObject.transform.forward = (player.transform.position - transform.position).normalized;
 
 
